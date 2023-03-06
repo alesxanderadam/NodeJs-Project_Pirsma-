@@ -1,5 +1,5 @@
 const prisma = require("../config/prisma-require");
-const { successCode, sendInternalServerErrorResponse, sendNotFoundResponse, sendBadRequestResponse } = require("../config/response-status");
+const { successCode, sendInternalServerErrorResponse, sendNotFoundResponse, sendBadRequestResponse, successCodeNoData } = require("../config/response-status");
 const sharp = require('sharp');
 const { format } = require('date-fns');
 
@@ -32,8 +32,7 @@ const getAllImages = async (req, res) => {
 
 const createImage = async (req, res) => {
     const { id } = req.params
-    let { ten_hinh, mo_ta, noi_dung } = req.body
-
+    let { ten_hinh, mo_ta } = req.body
     try {
         let user = await prisma.nguoi_dung.findUnique({
             where: {
@@ -52,7 +51,7 @@ const createImage = async (req, res) => {
                 .toBuffer();
             if (fileName) {
                 const url = process.env.DB_HOST + ":" + process.env.PORT_SERVER + "/images/" + req.file.filename
-                // const ngay_luu = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+                const ngay_luu = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
                 const hinhAnh = await prisma.hinh_anh.create({
                     data: {
                         ten_hinh, duong_dan: url, mo_ta, nguoi_dung: {
@@ -61,17 +60,17 @@ const createImage = async (req, res) => {
                     }
                 })
 
-                // await prisma.luu_anh.create({
-                //     data: {
-                //         nguoi_dung: {
-                //             connect: { nguoi_dung_id: parseInt(id) }
-                //         },
-                //         hinh_anh: {
-                //             connect: { hinh_id: hinhAnh.hinh_id }
-                //         },
-                //         ngay_luu: new Date(ngay_luu)
-                //     }
-                // })
+                await prisma.luu_anh.create({
+                    data: {
+                        nguoi_dung: {
+                            connect: { nguoi_dung_id: parseInt(id) }
+                        },
+                        hinh_anh: {
+                            connect: { hinh_id: hinhAnh.hinh_id }
+                        },
+                        ngay_luu: new Date(ngay_luu)
+                    }
+                })
 
                 if (hinhAnh) {
                     successCode(res, { hinhAnh }, "upload image succeses")
@@ -84,7 +83,6 @@ const createImage = async (req, res) => {
             return;
         }
     } catch (err) {
-        console.log(err)
         sendInternalServerErrorResponse(res, "Server error")
     }
 }
@@ -93,22 +91,33 @@ const addCommentForImage = async (req, res) => {
     let { id } = req.params
     let { noi_dung } = req.body
     const ngay_luu = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
-    const binhLuan = await prisma.binh_luan.create({
-        data: {
-            hinh_anh: {
-                connect: {
-                    hinh_id: parseInt(id)
+    const hinhAnh = await prisma.hinh_anh.findUnique({
+        where: { hinh_id: parseInt(id) },
+    });
+
+    if (!hinhAnh) {
+        successCodeNoData(res, `Image with id ${id} does not exist`)
+        return;
+    } else {
+        try {
+            const binhLuan = await prisma.binh_luan.create({
+                data: {
+                    hinh_anh: {
+                        connect: {
+                            hinh_id: parseInt(id)
+                        }
+                    },
+                    nguoi_dung: {
+                        connect: { nguoi_dung_id: req.user.data.nguoi_dung_id }
+                    },
+                    ngay_binh_luan: new Date(ngay_luu),
+                    noi_dung
                 }
-            },
-            nguoi_dung: {
-                connect: { nguoi_dung_id: req.user.data.nguoi_dung_id }
-            },
-            ngay_binh_luan: new Date(ngay_luu),
-            noi_dung
+            })
+            successCode(res, binhLuan, "Comment success")
+        } catch (error) {
+            res.status(500).json({ error: 'Internal server error' });
         }
-    })
-    if (binhLuan) {
-        successCode(res, binhLuan, "Comment succcess")
     }
 }
 
@@ -187,7 +196,6 @@ const checkedSaveImage = async (req, res) => {
             return;
         }
     } catch (err) {
-        console.log(err)
         sendInternalServerErrorResponse(res, "Sever error")
         return;
     }

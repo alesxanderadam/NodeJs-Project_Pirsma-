@@ -21,11 +21,11 @@ const storage = diskStorage({
 })
 const upload = multer({ storage })
 
-userRoute.get("/getUserById/:id", verifyToken, getUserById)
+userRoute.get("/getUserById/:id", getUserById)
 
-userRoute.get("/getImageByUserId/:id", verifyToken, getImageByUserId)
+userRoute.get("/getImageByUserId/:id", getImageByUserId)
 
-userRoute.get("/getImageSaved/:id", verifyToken, getImageSaved)
+userRoute.get("/getImageSaved/:id", getImageSaved)
 
 userRoute.post("/uploadImagesUser/:id", upload.single("file"), uploadImageUser)
 

@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const generateToken = (data) => {
-    return jwt.sign({ data }, "17Nb2Wa#", { expiresIn: "20m" })
+    return jwt.sign({ data }, "17Nb2Wa#", { expiresIn: "1d" })
 }
 
 const checkToken = (token) => {

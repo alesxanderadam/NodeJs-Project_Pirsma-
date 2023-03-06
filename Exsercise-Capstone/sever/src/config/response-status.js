@@ -4,8 +4,17 @@ const successCode = (res, data, message) => {
         message,
         content: data
     })
+}
+
+//200
+const successCodeNoData = (res, data, message) => {
+    res.status(201).json({
+        message,
+        content: data
+    })
 
 }
+
 //400
 const sendBadRequestResponse = (res, data, message) => {
     res.status(400).json({
@@ -38,5 +47,5 @@ const sendInternalServerErrorResponse = (res, message) => {
 }
 
 module.exports = {
-    successCode, sendBadRequestResponse, sendUnauthorizedResponse, sendNotFoundResponse, sendInternalServerErrorResponse
+    successCode, successCodeNoData, sendBadRequestResponse, sendUnauthorizedResponse, sendNotFoundResponse, sendInternalServerErrorResponse
 }
