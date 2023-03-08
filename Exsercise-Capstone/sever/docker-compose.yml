@@ -1,0 +1,43 @@
+# docker-compose up -d
+
+version: '3'
+services:
+  mysql_db:
+    image: mysql
+    restart: always  
+    container_name: mysql_db
+    environment:
+      - MYSQL_DATABASE=db_capstone
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=1234
+      - MYSQL_ROOT_PASSWORD=1234
+    ports:
+      - 3307:3306
+    volumes:
+      - mysql_db:/var/lib/mysql
+    networks:
+      - node-network
+  app:
+    depends_on:
+      - mysql_db
+    restart: always
+    container_name: cons-node
+    build: . 
+    environment:
+      - DB_HOST=mysql_db
+      - DB_DATABASE=db_capstone
+      - DB_USER=root
+      - DB_PASS=1234
+      - DB_PORT=3307
+      - DB_DIALECT=mysql
+    ports:
+      - 3001:8080
+    networks:
+      - node-network
+
+volumes:
+  mysql_db:
+    driver: local
+
+networks:
+  node-network:

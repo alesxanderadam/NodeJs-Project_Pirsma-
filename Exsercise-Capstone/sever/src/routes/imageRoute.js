@@ -23,7 +23,7 @@ imageRoute.get("/getAllImages/:keyword?", getAllImages);
 imageRoute.get("/getComment/:id", getComment);
 imageRoute.get("/getDetailImage/:id", getDetailImage);
 imageRoute.get("/checkedSaveImage/:id", verifyToken, checkedSaveImage);
-imageRoute.post("/createImages/:id", upload.single("file"), createImage);
+imageRoute.post("/createImages", verifyToken, upload.single("file"), createImage);
 imageRoute.post("/addCommentForImage/:id", verifyToken, addCommentForImage);
 
 module.exports = imageRoute;

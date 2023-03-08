@@ -15,7 +15,7 @@ const signIn = async (req, res) => {
             }
         });
         if (user) {
-            let checkPassword = bcrypt.compareSync(mat_khau, user.mat_khau);
+            let checkPassword = bcrypt.compare(mat_khau, user.mat_khau);
             if (checkPassword) {
                 let token = generateToken(user)
                 successCode(res, token, "Login user success");

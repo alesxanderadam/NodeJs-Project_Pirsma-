@@ -20,7 +20,7 @@ const getUserById = async (req, res) => {
                     anh_dai_dien: true
                 }
             })
-            successCode(res, dataUserById, "Success code")
+            successCode(res, dataUserById, "Xử lý thành công")
         } else {
             sendNotFoundResponse(res, "User not found")
         }
@@ -46,7 +46,7 @@ const getImageByUserId = async (req, res) => {
             if (!dataUserById || !dataUserById.hinh_anh) {
                 sendNotFoundResponse(res, "No photos have been added yet")
             } else {
-                successCode(res, dataUserById, "Success code")
+                successCode(res, dataUserById, "Xử lý thành công")
             }
         } else {
             sendNotFoundResponse(res, "User not found")
@@ -74,7 +74,7 @@ const getImageSaved = async (req, res) => {
                 where: { hinh_id: { in: luuAnhList.map(l => l.hinh_id) } },
                 include: { nguoi_dung: true }
             })
-            successCode(res, imageList, "Success code")
+            successCode(res, imageList, "Xử lý thành công")
         } else {
             sendNotFoundResponse(res, "User not found")
             return;

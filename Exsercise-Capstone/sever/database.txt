@@ -1,0 +1,55 @@
+CREATE DATABASE db_capstone;
+use db_capstone;
+
+CREATE TABLE nguoi_dung(
+	nguoi_dung_id int auto_increment primary key not null,
+    email varchar(200),
+    mat_khau varchar(150),
+	ho_ten varchar(200),
+    tuoi int,
+    anh_dai_dien varchar(250)
+);
+
+CREATE TABLE hinh_anh(
+	hinh_id int auto_increment primary key not null,
+    ten_hinh varchar(200),
+    duong_dan varchar(200),
+    mo_ta varchar(200),
+    nguoi_dung_id int not null,
+	FOREIGN KEY(nguoi_dung_id) REFERENCES nguoi_dung(nguoi_dung_id)
+);
+
+CREATE TABLE binh_luan(
+	nguoi_dung_id int not null,
+    hinh_id int  not null,
+    binh_luan datetime,
+    noi_dung varchar(500),
+	FOREIGN KEY (nguoi_dung_id) REFERENCES nguoi_dung(nguoi_dung_id),
+    FOREIGN KEY (hinh_id) REFERENCES hinh_anh(hinh_id)
+);
+
+CREATE TABLE luu_anh(
+	nguoi_dung_id int not null,
+    hinh_id int not null,
+    ngay_luu datetime,
+    FOREIGN KEY (nguoi_dung_id) REFERENCES nguoi_dung(nguoi_dung_id),
+    FOREIGN KEY (hinh_id) REFERENCES hinh_anh(hinh_id)
+);
+
+INSERT INTO nguoi_dung VALUES (1, "tony@gmail.com", '12345', "Nguyễn Văn Tèo", 18, "https://i.pravatar.cc/1"),
+(2,"tramanh28@gmail.com", '12345', "Đặng Võ Võ Trâm Anh", 23, "https://i.pravatar.cc/2"),
+(3,"ngoclancute.2004@gmail.com", '12345', "Lan Anh Võ", 18, "https://i.pravatar.cc/3"),
+(4,"lamtuyenleekg2004@gmail.com", '12345', "Lê Võ Lam Tuyền", 12, "https://i.pravatar.cc/4");
+
+INSERT INTO hinh_anh VALUES (1, "001.png", "https://i.pravatar.cc/9", "Đây là hình test", 1),
+(2, "002.png", "https://i.pravatar.cc/14", "Đây là hình test thg user 5", 4);
+
+INSERT INTO binh_luan values(4,2, "2023-02-28 08:11:21", "ahihi");
+
+INSERT INTO luu_anh values(4,2,"2023-02-23 08:11:21"),(1,1,"2023-02-23 08:12:21");
+
+select * from nguoi_dung as u , hinh_anh as h where u.nguoi_dung_id = h.nguoi_dung_id;
+select * from luu_anh;
+select * from nguoi_dung;
+select * from hinh_anh;
+

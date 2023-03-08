@@ -11,7 +11,7 @@ const checkToken = (token) => {
 const verifyToken = (req, res, next) => {
     let { tokencapstone } = req.headers
     if (!tokencapstone) {
-        res.status(401).send("Auth failed")
+        res.status(401).send("Lỗi bảo mật, Bạn có vẻ chưa đăng nhập")
         return;
     }
     try {

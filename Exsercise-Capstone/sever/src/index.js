@@ -6,6 +6,7 @@ app.use(express.static("public"));
 
 app.listen(3001)
 
+
 app.use("/api", rootRoute)
 
 const swaggerUi = require('swagger-ui-express');

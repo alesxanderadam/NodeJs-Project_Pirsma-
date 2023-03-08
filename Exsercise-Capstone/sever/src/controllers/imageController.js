@@ -21,69 +21,59 @@ const getAllImages = async (req, res) => {
             }
         });
         if (data && data.length > 0) {
-            successCode(res, data, "Success code")
+            successCode(res, data, "Xử lý thành công")
         } else {
-            sendNotFoundResponse(res, req.body, "Not find data in database")
+            sendNotFoundResponse(res, req.body, "Không tìm thấy dữ liệu trong database")
         }
     } catch (err) {
-        sendInternalServerErrorResponse(res, "Sever error")
+        sendInternalServerErrorResponse(res, "Lỗi backend")
     }
 }
 
 const createImage = async (req, res) => {
-    const { id } = req.params
+    let { nguoi_dung_id } = req.user.data
     let { ten_hinh, mo_ta } = req.body
     try {
-        let user = await prisma.nguoi_dung.findUnique({
-            where: {
-                nguoi_dung_id: parseInt(id),
-            },
-        });
-        if (user) {
-            if (!req.file) {
-                sendBadRequestResponse(res, "load file must be an image")
-                return;
-            }
-            const fileName = await sharp(process.cwd() + "/public/images/" + req.file.filename)
-                .resize({ width: 500 })
-                .jpeg({ quality: 70 })
-                .png({ quality: 70 })
-                .toBuffer();
-            if (fileName) {
-                const url = process.env.DB_HOST + ":" + process.env.PORT_SERVER + "/images/" + req.file.filename
-                const ngay_luu = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
-                const hinhAnh = await prisma.hinh_anh.create({
-                    data: {
-                        ten_hinh, duong_dan: url, mo_ta, nguoi_dung: {
-                            connect: { nguoi_dung_id: parseInt(id) }
-                        }
-                    }
-                })
-
-                await prisma.luu_anh.create({
-                    data: {
-                        nguoi_dung: {
-                            connect: { nguoi_dung_id: parseInt(id) }
-                        },
-                        hinh_anh: {
-                            connect: { hinh_id: hinhAnh.hinh_id }
-                        },
-                        ngay_luu: new Date(ngay_luu)
-                    }
-                })
-
-                if (hinhAnh) {
-                    successCode(res, { hinhAnh }, "upload image succeses")
-                } else {
-                    sendNotFoundResponse(res, hinhAnh, "Uploaded file must be an image")
-                }
-            }
-        } else {
-            sendNotFoundResponse(res, user, "User not found")
+        if (!req.file) {
+            sendBadRequestResponse(res, "File gửi lên phải là hình ảnh")
             return;
         }
+        const fileName = await sharp(process.cwd() + "/public/images/" + req.file.filename)
+            .resize({ width: 500 })
+            .jpeg({ quality: 70 })
+            .png({ quality: 70 })
+            .toBuffer();
+        if (fileName) {
+            const url = process.env.DB_HOST + ":" + process.env.PORT_SERVER + "/images/" + req.file.filename
+            const ngay_luu = format(new Date(), 'yyyy-MM-dd HH:mm:ss');
+            const hinhAnh = await prisma.hinh_anh.create({
+                data: {
+                    ten_hinh, duong_dan: url, mo_ta, nguoi_dung: {
+                        connect: { nguoi_dung_id: parseInt(nguoi_dung_id) }
+                    }
+                }
+            })
+
+            await prisma.luu_anh.create({
+                data: {
+                    nguoi_dung: {
+                        connect: { nguoi_dung_id: parseInt(nguoi_dung_id) }
+                    },
+                    hinh_anh: {
+                        connect: { hinh_id: hinhAnh.hinh_id }
+                    },
+                    ngay_luu: new Date(ngay_luu)
+                }
+            })
+
+            if (hinhAnh) {
+                successCode(res, { hinhAnh }, "tải ảnh thành công")
+            } else {
+                sendBadRequestResponse(res, "File gửi lên phải là hình ảnh")
+            }
+        }
     } catch (err) {
-        sendInternalServerErrorResponse(res, "Server error")
+        sendInternalServerErrorResponse(res, "Lỗi backend")
     }
 }
 
@@ -116,7 +106,7 @@ const addCommentForImage = async (req, res) => {
             })
             successCode(res, binhLuan, "Comment success")
         } catch (error) {
-            res.status(500).json({ error: 'Internal server error' });
+            res.status(500).json({ error: 'Lỗi backen' });
         }
     }
 }
@@ -143,13 +133,13 @@ const getDetailImage = async (req, res) => {
                     }
                 }
             })
-            successCode(res, image, "Success code")
+            successCode(res, image, "Xử lý thành công")
         } else {
-            sendNotFoundResponse(res, "Not find data in database")
+            sendNotFoundResponse(res, "Không tìm thấy dữ liệu trong database")
             return;
         }
     } catch (err) {
-        sendInternalServerErrorResponse(res, "Sever error")
+        sendInternalServerErrorResponse(res, "Lỗi backend")
         return;
     }
 }
@@ -166,13 +156,13 @@ const getComment = async (req, res) => {
             let comment = await prisma.binh_luan.findMany({
                 where: { hinh_id: parseInt(id) }
             })
-            successCode(res, comment, "Success code")
+            successCode(res, comment, "Xử lý thành công")
         } else {
-            sendNotFoundResponse(res, "Not find data in database")
+            sendNotFoundResponse(res, "Không tìm thấy dữ liệu trong database")
             return;
         }
     } catch (err) {
-        sendInternalServerErrorResponse(res, "Sever error")
+        sendInternalServerErrorResponse(res, "Lỗi backend")
         return;
     }
 }
@@ -190,13 +180,13 @@ const checkedSaveImage = async (req, res) => {
             },
         })
         if (image) {
-            successCode(res, "Đã lưu", "Success code")
+            successCode(res, "Đã lưu", "Xử lý thành công")
         } else {
             successCode(res, "Chưa lưu")
             return;
         }
     } catch (err) {
-        sendInternalServerErrorResponse(res, "Sever error")
+        sendInternalServerErrorResponse(res, "Lỗi backend")
         return;
     }
 }
