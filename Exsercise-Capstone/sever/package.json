@@ -13,7 +13,7 @@
     "prisma": "^4.10.1"
   },
   "dependencies": {
-    "@prisma/client": "^4.10.1",
+    "@prisma/client": "^4.11.0",
     "crypto": "^1.0.1",
     "date-fns": "^2.29.3",
     "dotenv": "^16.0.3",

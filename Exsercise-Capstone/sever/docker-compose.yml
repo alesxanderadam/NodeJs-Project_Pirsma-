@@ -1,43 +1,35 @@
-# docker-compose up -d
-
 version: '3'
 services:
-  mysql_db:
-    image: mysql
-    restart: always  
-    container_name: mysql_db
-    environment:
-      - MYSQL_DATABASE=db_capstone
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=1234
-      - MYSQL_ROOT_PASSWORD=1234
+  prisma:
+    container_name: project-prisma
+    build: 
+      context: .
     ports:
-      - 3307:3306
-    volumes:
-      - mysql_db:/var/lib/mysql
+      - 3001:3001
+    depends_on:
+      - mysql_dbcapstone
+    env_file: .env
     networks:
       - node-network
-  app:
-    depends_on:
-      - mysql_db
-    restart: always
-    container_name: cons-node
-    build: . 
-    environment:
-      - DB_HOST=mysql_db
-      - DB_DATABASE=db_capstone
-      - DB_USER=root
-      - DB_PASS=1234
-      - DB_PORT=3307
-      - DB_DIALECT=mysql
+
+  mysql_dbcapstone:
+    image: mysql
+    container_name: mysql_dbcapstone
     ports:
-      - 3001:8080
+      - 3307:3306
+    environment:
+      - MYSQL_DATABASE=db_capstone
+      - MYSQL_ROOT_PASSWORD=1234
+    env_file: .env
+    volumes:
+      - mysql_dbcapstone:/var/lib/mysql
     networks:
       - node-network
 
 volumes:
-  mysql_db:
+  mysql_dbcapstone:
     driver: local
 
 networks:
   node-network:
+  

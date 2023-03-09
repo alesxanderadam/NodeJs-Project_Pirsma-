@@ -1,14 +1,19 @@
-FROM node:18
+# Sử dụng image cơ bản node
+FROM node:latest
 
+# Tạo thư mục làm việc
+WORKDIR /app
 
-WORKDIR /urc/src/app
-
-COPY package*.json .
-
-RUN yarn install --save-dev
-
+# Sao chép các tệp và thư mục cần thiết vào image
+COPY package*.json ./
+COPY prisma/ ./prisma/
 COPY . .
 
+# Cài đặt các dependency
+RUN yarn install
+
+# Mở cổng
 EXPOSE 3001
 
-CMD [ "yarn" , "start" ]
+# Khởi động server
+CMD [ "yarn", "start" ]
