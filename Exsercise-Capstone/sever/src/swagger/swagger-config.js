@@ -52,6 +52,61 @@
 
 /**
  * @swagger
+ * /api/images/{keyword}:
+ *   get:
+ *     summary: Lấy danh sách hình ảnh theo từ khóa
+ *     description: Lấy danh sách hình ảnh từ cơ sở dữ liệu theo từ khóa tìm kiếm. Nếu không có từ khóa, lấy toàn bộ danh sách hình ảnh.
+ *     parameters:
+ *       - in: path
+ *         name: keyword
+ *         description: Từ khóa tìm kiếm
+ *         required: false
+ *         schema:
+ *           oneOf:
+ *             - type: string
+ *             - type: null
+ *     responses:
+ *       200:
+ *         description: Trả về danh sách hình ảnh nếu thành công
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   hinh_id:
+ *                     type: integer
+ *                   ten_hinh:
+ *                     type: string
+ *                   duong_dan:
+ *                     type: string
+ *                   mo_ta:
+ *                     type: string
+ *       404:
+ *         description: Không tìm thấy dữ liệu trong cơ sở dữ liệu
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: Lỗi backend
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+
+
+
+
+
+
+
+
+
+/**
+ * @swagger
  * /api/user/{id}:
  *  get:
  *      summary: Get user by ID
