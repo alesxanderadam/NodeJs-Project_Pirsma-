@@ -2,8 +2,8 @@ version: '3'
 services:
   prisma:
     container_name: project-prisma
-    image: mrdam2301/capstoneprisma:v1
-    # build: .
+    # image: mrdam2301/capstoneprisma:v1
+    build: .
     ports:
       - 3001:3001
     depends_on:
@@ -29,6 +29,7 @@ services:
 volumes:
   mysql_dbcapstone:
     driver: local
+    name: cc0ada818d48e9f72ffe120c86d46efcf629fe50b73b13062debcd21665c5c26
 
 networks:
   node-network:

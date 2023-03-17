@@ -26,6 +26,7 @@ const getAllImages = async (req, res) => {
             sendNotFoundResponse(res, req.body, "Không tìm thấy dữ liệu trong database")
         }
     } catch (err) {
+        console.log(err)
         sendInternalServerErrorResponse(res, "Lỗi backend")
     }
 }
@@ -211,6 +212,7 @@ const getComment = async (req, res) => {
             return;
         }
     } catch (err) {
+        console.log(err)
         sendInternalServerErrorResponse(res, "Lỗi backend")
         return;
     }
