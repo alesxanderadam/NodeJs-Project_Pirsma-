@@ -1,0 +1,465 @@
+{
+	"info": {
+		"_postman_id": "00852a7c-8814-41a0-92eb-7440ff0e80b6",
+		"name": "capstone_prisma",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23296850"
+	},
+	"item": [
+		{
+			"name": "API-Capstone",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "Api-Sign_in",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"lamtuyenleekg2004@gmail.com\",\r\n    \"mat_khau\": \"1234\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{DOMAIN(capstone)}}/user/signIn",
+									"host": [
+										"{{DOMAIN(capstone)}}"
+									],
+									"path": [
+										"user",
+										"signIn"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Api-Sign_up",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"ltqhuy.th0112@gmail.com\",\r\n    \"mat_khau\": \"2241\",\r\n    \"ho_ten\": \"Lê Trần Quang Huy\",\r\n    \"tuoi\": 19\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{DOMAIN(capstone)}}/user/signUp",
+									"host": [
+										"{{DOMAIN(capstone)}}"
+									],
+									"path": [
+										"user",
+										"signUp"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Home",
+					"item": [
+						{
+							"name": "Api-GetAllImages",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{DOMAIN(capstone)}}/image/getAllImages/huy",
+									"host": [
+										"{{DOMAIN(capstone)}}"
+									],
+									"path": [
+										"image",
+										"getAllImages",
+										"huy"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Image",
+					"item": [
+						{
+							"name": "Api-GetImageByUserId",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "tokenquanghuy",
+										"value": "{{Token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{DOMAIN(capstone)}}/user/getImageByUserId/1",
+									"host": [
+										"{{DOMAIN(capstone)}}"
+									],
+									"path": [
+										"user",
+										"getImageByUserId",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Api-GetCommentByIdImage",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{DOMAIN(capstone)}}/image/getComment/2",
+									"host": [
+										"{{DOMAIN(capstone)}}"
+									],
+									"path": [
+										"image",
+										"getComment",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Api-CheckSaveImage",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "tokencapstone",
+										"value": "{{Token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{DOMAIN(capstone)}}/image/checkedSaveImage/1",
+									"host": [
+										"{{DOMAIN(capstone)}}"
+									],
+									"path": [
+										"image",
+										"checkedSaveImage",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Api-Create-Images",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "tokencapstone",
+										"value": "{{Token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/Quang Huy/OneDrive/Pictures/Screenshots/z3969458995355_6b6f02a6164045fd3bcac7f983d75f38.jpg"
+										},
+										{
+											"key": "mo_ta",
+											"value": "trai hàn quốc",
+											"type": "text"
+										},
+										{
+											"key": "ten_hinh",
+											"value": "kịmonghuy",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{DOMAIN(capstone)}}/image/createImages",
+									"host": [
+										"{{DOMAIN(capstone)}}"
+									],
+									"path": [
+										"image",
+										"createImages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Api-Save_Image",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "tokencapstone",
+										"value": "{{Token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"hinh_id\": 2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{DOMAIN(capstone)}}/image/saveImage",
+									"host": [
+										"{{DOMAIN(capstone)}}"
+									],
+									"path": [
+										"image",
+										"saveImage"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Api-DeleteImage",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "tokencapstone",
+										"value": "{{Token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"hinh_id\": 35\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{DOMAIN(capstone)}}/user/deleteImageSaved",
+									"host": [
+										"{{DOMAIN(capstone)}}"
+									],
+									"path": [
+										"user",
+										"deleteImageSaved"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Management-Image",
+					"item": [
+						{
+							"name": "Api-GetUserById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{DOMAIN(capstone)}}/user/getUserById/4",
+									"host": [
+										"{{DOMAIN(capstone)}}"
+									],
+									"path": [
+										"user",
+										"getUserById",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Api-GetImageSaveByUserId",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "tokenquanghuy",
+										"value": "{{Token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{DOMAIN(capstone)}}/user/getImageSaved/1",
+									"host": [
+										"{{DOMAIN(capstone)}}"
+									],
+									"path": [
+										"user",
+										"getImageSaved",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Api-GetListImageCreateByUserId",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{DOMAIN(capstone)}}/image/getDetailImage/2",
+									"host": [
+										"{{DOMAIN(capstone)}}"
+									],
+									"path": [
+										"image",
+										"getDetailImage",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Api-UploadAvartarUser",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "tokencapstone",
+										"value": "{{Token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/Quang Huy/OneDrive/Pictures/Screenshots/lamtuyen.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{DOMAIN(capstone)}}/user/uploadImagesUser/4",
+									"host": [
+										"{{DOMAIN(capstone)}}"
+									],
+									"path": [
+										"user",
+										"uploadImagesUser",
+										"4"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Api-Comment",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "tokencapstone",
+										"value": "{{Token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"noi_dung\": \"Bạn này tên thiệt là Nguyễn Văn Tèo comment này do Lam Tuyền bình luạn nha\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{DOMAIN(capstone)}}/image/addCommentForImage/2",
+									"host": [
+										"{{DOMAIN(capstone)}}"
+									],
+									"path": [
+										"image",
+										"addCommentForImage",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Api-UpdateUser",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "tokencapstone",
+										"value": "{{Token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"lamtuyenleekg2004@gmail.com\",\r\n    \"mat_khau\": \"2301\",\r\n    \"ho_ten\": \"Lê Võ Lam Tuyền\",\r\n    \"tuoi\": 22\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{DOMAIN(capstone)}}/user/updateUser/4",
+									"host": [
+										"{{DOMAIN(capstone)}}"
+									],
+									"path": [
+										"user",
+										"updateUser",
+										"4"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
