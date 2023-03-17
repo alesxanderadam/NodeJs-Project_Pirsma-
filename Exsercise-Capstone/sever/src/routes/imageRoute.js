@@ -1,5 +1,5 @@
 const express = require("express");
-const { getAllImages, createImage, getDetailImage, getComment, checkedSaveImage, addCommentForImage } = require("../controllers/imageController");
+const { getAllImages, createImage, getDetailImage, getComment, checkedSaveImage, addCommentForImage, saveImage } = require("../controllers/imageController");
 const { diskStorage } = require('multer');
 
 const imageRoute = express.Router();
@@ -24,6 +24,7 @@ imageRoute.get("/getComment/:id", getComment);
 imageRoute.get("/getDetailImage/:id", getDetailImage);
 imageRoute.get("/checkedSaveImage/:id", verifyToken, checkedSaveImage);
 imageRoute.post("/createImages", verifyToken, upload.single("file"), createImage);
+imageRoute.post("/saveImage", verifyToken, saveImage);
 imageRoute.post("/addCommentForImage/:id", verifyToken, addCommentForImage);
 
 module.exports = imageRoute;

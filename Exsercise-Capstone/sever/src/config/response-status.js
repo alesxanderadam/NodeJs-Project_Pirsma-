@@ -39,6 +39,14 @@ const sendNotFoundResponse = (res, data, message) => {
     })
 }
 
+//409
+const sendConflict = (res, data, message) => {
+    res.status(409).json({
+        message,
+        content: data
+    })
+}
+
 //500
 const sendInternalServerErrorResponse = (res, message) => {
     res.status(500).json({
@@ -47,5 +55,5 @@ const sendInternalServerErrorResponse = (res, message) => {
 }
 
 module.exports = {
-    successCode, successCodeNoData, sendBadRequestResponse, sendUnauthorizedResponse, sendNotFoundResponse, sendInternalServerErrorResponse
+    successCode, successCodeNoData, sendConflict, sendBadRequestResponse, sendUnauthorizedResponse, sendNotFoundResponse, sendInternalServerErrorResponse
 }

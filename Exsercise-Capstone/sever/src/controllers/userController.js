@@ -76,7 +76,7 @@ const getImageSaved = async (req, res) => {
             })
             successCode(res, imageList, "Xử lý thành công")
         } else {
-            sendNotFoundResponse(res, "User not found")
+            sendNotFoundResponse(res, "Người dùng không tồn tại")
             return;
         }
     } catch (err) {
@@ -119,11 +119,11 @@ const deleteImageSaved = async (req, res) => {
                 sendUnauthorizedResponse(res, "Bạn không có quyền xóa ảnh này");
             }
         } else {
-            sendNotFoundResponse(res, "Image not found");
+            sendNotFoundResponse(res, "Ảnh không tồn tại");
             return;
         }
     } catch (err) {
-        sendInternalServerErrorResponse(res, "Sever error")
+        sendInternalServerErrorResponse(res, "Lỗi backend")
         return;
     }
 }
